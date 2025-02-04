@@ -1,0 +1,32 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "baseBranches": ["main"],
+  "extends": [
+    "config:recommended"
+  ],
+  "dependencyDashboard": false,
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": [".github/workflows/.*\\.ya?ml$"],
+      "matchStrings": ["helm-version: (?<currentValue>.*)"],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "repository-name",
+      "extractVersionTemplate": "^v?(?<version>.*)$"
+    }
+  ],
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["*"],
+      "enabled": false
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "enabled": true
+    },
+    {
+      "paths": [".github/workflows/**"],
+      "enabled": true
+    }
+  ]
+}
